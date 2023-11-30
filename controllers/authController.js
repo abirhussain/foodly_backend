@@ -43,4 +43,36 @@ module.exports = {
       });
     }
   },
+  loginUser: async (req, res) => {
+    const { email } = req.body;
+    try {
+      const user = await User.findOne(
+        { email: email },
+        { __v: 0, updatedAt: 0, createdAt: 0 }
+      );
+      !user && res.status(401).json({ message: "Wrong credentials" });
+      const decryptedPassword = CryptoJS.AES.decrypt(
+        password,
+        process.env.SECRET
+      );
+      const decrypted = decryptedPassword.toString(CryptoJS.enc.Utf8);
+      decrypted !== password &&
+        res.status(401).json({ message: "Wrong credentials" });
+      const userToken = jwt.sign(
+        {
+          id: user._id,
+          userType: user.userType,
+          email: user.email,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "21d" }
+      );
+
+      const { password, email, ...others } = user._doc;
+
+      res.status(200).json({ ...others, userToken });
+    } catch (error) {
+      res.status(500).json({ status: false, error: error.message });
+    }
+  },
 };
