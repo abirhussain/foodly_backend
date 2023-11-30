@@ -2,6 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const admin = require("firebase-admin");
+
+const serviceAccount = require("./serviceAccountKey.json");
 
 dotenv.config();
 
@@ -12,6 +15,10 @@ const mongo_uri = process.env.MONGO_URI;
 dotenv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 // connect database
 mongoose
