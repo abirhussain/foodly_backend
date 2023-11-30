@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 
 const serviceAccount = require("./serviceAccountKey.json");
+const authRouter = require("./routes/auth");
 
 dotenv.config();
 
@@ -15,6 +16,9 @@ const mongo_uri = process.env.MONGO_URI;
 dotenv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// routes
+app.use("/", authRouter);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
