@@ -13,7 +13,7 @@ module.exports = {
           updatedAt: 0,
         }
       );
-      res.status(200).json(User);
+      res.status(200).json(user);
     } catch (error) {
       res
         .satus(500)
@@ -26,7 +26,7 @@ module.exports = {
     try {
       await User.findByIdAndDelete(userId);
       res
-        .status(204)
+        .status(200)
         .json({ status: true, message: "user deleted successfully" });
     } catch (error) {
       res.satus(500).json({ message: "error deleting user" });
@@ -44,7 +44,7 @@ module.exports = {
         { new: true }
       );
       res
-        .status(204)
+        .status(200)
         .json({ status: true, message: "user updated successfully" });
     } catch (error) {
       res.satus(500).json({ message: "error updating user" });
