@@ -7,6 +7,7 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/userRoute");
+const restaurantRouter = require("./routes/restaurantRoute");
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ mongoose
 // routes
 app.use("/", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/restaurant", restaurantRouter);
 
 app.listen(port, () => {
   console.log(`Foodly backend is running on port ${port}`);
