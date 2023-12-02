@@ -6,6 +6,7 @@ const admin = require("firebase-admin");
 
 const serviceAccount = require("./serviceAccountKey.json");
 const authRouter = require("./routes/auth");
+const userRouter = require("./routes/userRoute");
 
 dotenv.config();
 
@@ -16,9 +17,6 @@ const mongo_uri = process.env.MONGO_URI;
 dotenv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// routes
-app.use("/", authRouter);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -33,6 +31,10 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+// routes
+app.use("/", authRouter);
+app.use("/api/users", userRouter);
 
 app.listen(port, () => {
   console.log(`Foodly backend is running on port ${port}`);
