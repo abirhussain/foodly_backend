@@ -8,6 +8,7 @@ const serviceAccount = require("./serviceAccountKey.json");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/userRoute");
 const restaurantRouter = require("./routes/restaurantRoute");
+const categoryRouter = require("./routes/categoryRoute");
 
 dotenv.config();
 
@@ -20,24 +21,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+	credential: admin.credential.cert(serviceAccount),
 });
 
 // connect database
 mongoose
-  .connect(mongo_uri)
-  .then(() => {
-    console.log("Database is connected");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+	.connect(mongo_uri)
+	.then(() => {
+		console.log("Database is connected");
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
 // routes
 app.use("/", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/restaurant", restaurantRouter);
+app.use("/api/category", categoryRouter);
 
 app.listen(port, () => {
-  console.log(`Foodly backend is running on port ${port}`);
+	console.log(`Foodly backend is running on port ${port}`);
 });
