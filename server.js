@@ -9,6 +9,7 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/userRoute");
 const restaurantRouter = require("./routes/restaurantRoute");
 const categoryRouter = require("./routes/categoryRoute");
+const foodRouter = require("./routes/foodRoute");
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use("/", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/restaurant", restaurantRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/foods", foodRouter);
 
 app.listen(port, () => {
 	console.log(`Foodly backend is running on port ${port}`);
